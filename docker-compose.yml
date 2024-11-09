@@ -1,0 +1,36 @@
+services:
+  api:
+    build: .
+    container_name: pokemon-api
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/myapp
+    entrypoint: ./entrypoint.sh
+    environment:
+      RAILS_ENV: development
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: postgres
+    links:
+      - db
+    secrets:
+      - db_password
+    depends_on:
+      - db
+  db:
+    image: postgres:17-alpine
+    container_name: pokemon-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+
+volumes:
+  postgres_data:
+secrets:
+  db_password:
+    file: ./db_password.txt
