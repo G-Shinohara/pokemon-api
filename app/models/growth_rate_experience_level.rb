@@ -1,0 +1,2 @@
+class GrowthRateExperienceLevel < ApplicationRecord
+end

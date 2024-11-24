@@ -1,0 +1,2 @@
+class MoveAilment < ApplicationRecord
+end

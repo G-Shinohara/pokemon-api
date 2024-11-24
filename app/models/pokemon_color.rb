@@ -1,0 +1,2 @@
+class PokemonColor < ApplicationRecord
+end
